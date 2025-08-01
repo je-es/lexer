@@ -2,7 +2,7 @@
 <br>
 <div align="center">
     <p>
-        <img src="./assets/img/logo.png" alt="Input / Output" height="80" />
+        <img src="https://raw.githubusercontent.com/je-es/lexer/refs/heads/main/assets/img/logo.png" alt="Lexer" height="80" />
     </p>
 </div>
 
