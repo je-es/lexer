@@ -85,7 +85,4 @@
         return tokens;
     }
 
-    // Export default object
-    export default { createRules, error, tokenize };
-
 // ╚══════════════════════════════════════════════════════════════════════════════════════╝

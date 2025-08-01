@@ -21,7 +21,6 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 var lexer_exports = {};
 __export(lexer_exports, {
   createRules: () => createRules,
-  default: () => lexer_default,
   error: () => error2,
   tokenize: () => tokenize
 });
@@ -184,7 +183,6 @@ function tokenize(rules, source_code) {
   }
   return tokens;
 }
-var lexer_default = { createRules, error: error2, tokenize };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   createRules,

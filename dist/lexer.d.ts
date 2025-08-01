@@ -61,10 +61,5 @@ declare const createRules: typeof compile;
  * @returns An array of tokens, each with its type, value, and position.
  */
 declare function tokenize(rules: Rules, source_code: string): Token[];
-declare const _default: {
-    createRules: typeof compile;
-    error: symbol;
-    tokenize: typeof tokenize;
-};
 
-export { type Rules, type Token, createRules, _default as default, error, tokenize };
+export { type Rules, type Token, createRules, error, tokenize };

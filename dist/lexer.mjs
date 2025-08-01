@@ -155,10 +155,8 @@ function tokenize(rules, source_code) {
   }
   return tokens;
 }
-var lexer_default = { createRules, error: error2, tokenize };
 export {
   createRules,
-  lexer_default as default,
   error2 as error,
   tokenize
 };

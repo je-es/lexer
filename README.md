@@ -35,7 +35,7 @@ npm install @je-es/lexer
 
 ```typescript
 // Import lexer module
-import lexer from '@je-es/lexer';
+import * as lexer from '@je-es/lexer';
 
 // Create lexer rules
 const rules = lexer.createRules({
