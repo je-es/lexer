@@ -1,0 +1,31 @@
+{
+	"name"						: "@je-es/lexer",
+	"version"					: "0.0.0",
+	"description"				: "A lightweight, fast, and flexible lexical analyzer for tokenizing source code with zero dependencies.",
+	"keywords"					: [ "lexer", "tools" ],
+	"license"					: "MIT",
+
+	"main"						: "./dist/main.js",
+	"module"					: "./dist/main.mjs",
+	"types"						: "./dist/main.d.ts",
+	"files"						: [ "dist" ],
+
+	"scripts"					: { "test" : "tsup && jest", "build" : "tsup", "app" : "tsup && node ./dist/main.js" },
+	"author"					: { "name": "Maysara Elshewehy", "email": "maysara.elshewehy@gmail.com", "url": "https://github.com/maysara-elshewehy" },
+
+	"repository"				: { "type": "git", "url": "git+https://github.com/je-es/lexer.git" },
+	"bugs"						: { "url": "https://github.com/je-es/lexer/issues" },
+	"homepage"					: "https://github.com/je-es/lexer#readme",
+
+	"devDependencies"			: {
+		"@types/node"			: "^20.12.7",
+		"@types/jest"			: "^29.5.12",
+		"jest"					: "^29.7.0",
+		"ts-jest"				: "^29.1.2",
+		"ts-node"				: "^10.9.2",
+		"tsup"					: "^8.0.2",
+		"typescript"			: "^5.4.5"
+	},
+	"dependencies"				: {
+	}
+}
