@@ -1,6 +1,6 @@
 {
 	"name"						: "@je-es/lexer",
-	"version"					: "0.0.1",
+	"version"					: "0.0.2",
 	"description"				: "A lightweight, fast, and flexible lexical analyzer for tokenizing source code with zero dependencies.",
 	"keywords"					: [ "lexer", "tools" ],
 	"license"					: "MIT",
