@@ -1,31 +1,29 @@
 {
-	"name"						: "@je-es/lexer",
-	"version"					: "0.0.3",
-	"description"				: "Fundamental lexical analyzer that transforms source text into structured tokens with type and position information.",
-	"keywords"					: [ "je-es", "lexer", "token", "tool" ],
-	"license"					: "MIT",
+	"name": "@je-es/lexer",
+	"version": "0.0.3",
+	"description": "Fundamental lexical analyzer that transforms source text into structured tokens with type and position information.",
+	"keywords": [ "je-es", "lexer", "token", "tool" ],
+	"license": "MIT",
 
-	"main"						: "./dist/lexer.js",
-	"module"					: "./dist/lexer.mjs",
-	"types"						: "./dist/lexer.d.ts",
-	"files"						: [ "dist" ],
+	"main": "./dist/lexer.js",
+	"module": "./dist/lexer.mjs",
+	"types": "./dist/lexer.d.ts",
+	"files": [ "dist" ],
 
-	"scripts"					: { "test" : "tsup && jest", "build" : "tsup", "app" : "tsup && node ./dist/lexer.js" },
-	"author"					: { "name": "Maysara Elshewehy", "email": "maysara.elshewehy@gmail.com", "url": "https://github.com/maysara-elshewehy" },
+	"scripts": { "test" : "tsup && jest", "build" : "tsup", "app" : "tsup && node ./dist/lexer.js" },
+	"author": { "name": "Maysara Elshewehy", "email": "maysara.elshewehy@gmail.com", "url": "https://github.com/maysara-elshewehy" },
 
-	"repository"				: { "type": "git", "url": "git+https://github.com/je-es/lexer.git" },
-	"bugs"						: { "url": "https://github.com/je-es/lexer/issues" },
-	"homepage"					: "https://github.com/je-es/lexer#readme",
+	"repository": { "type": "git", "url": "git+https://github.com/je-es/lexer.git" },
+	"bugs": { "url": "https://github.com/je-es/lexer/issues" },
+	"homepage": "https://github.com/je-es/lexer#readme",
 
-	"devDependencies"			: {
-		"@types/node"			: "^20.12.7",
-		"@types/jest"			: "^29.5.12",
-		"jest"					: "^29.7.0",
-		"ts-jest"				: "^29.1.2",
-		"ts-node"				: "^10.9.2",
-		"tsup"					: "^8.0.2",
-		"typescript"			: "^5.4.5"
-	},
-	"dependencies"				: {
+	"devDependencies": {
+		"@types/node": "^20.12.7",
+		"@types/jest": "^29.5.12",
+		"jest": "^29.7.0",
+		"ts-jest": "^29.1.2",
+		"ts-node": "^10.9.2",
+		"tsup": "^8.0.2",
+		"typescript": "^5.4.5"
 	}
 }
