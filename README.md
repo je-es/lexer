@@ -102,17 +102,17 @@ import * as lexer from '@je-es/lexer';
         ```jsonc
         // Output
         [
-            { "type": "keyword",    "value": "var",         "pos": { "line": 1, "col":  1, "offset":  0 } },
-            { "type": "ws",         "value": " ",           "pos": { "line": 1, "col":  4, "offset":  3 } },
-            { "type": "ident",      "value": "name",        "pos": { "line": 1, "col":  5, "offset":  4 } },
-            { "type": "ws",         "value": " ",           "pos": { "line": 1, "col":  9, "offset":  8 } },
-            { "type": "assign",     "value": "=",           "pos": { "line": 1, "col": 10, "offset":  9 } },
-            { "type": "ws",         "value": " ",           "pos": { "line": 1, "col": 11, "offset": 10 } },
-            { "type": "string",     "value": "Maysara",     "pos": { "line": 1, "col": 12, "offset": 11 } },
-            { "type": "scolon",     "value": ";",           "pos": { "line": 1, "col": 21, "offset": 20 } },
-            { "type": "comment",    "value": "comment",     "pos": { "line": 1, "col": 22, "offset": 21 } },
-            { "type": "nl",         "value": "\n",          "pos": { "line": 1, "col": 32, "offset": 31 } },
-            { "type": "error",      "value": "$",           "pos": { "line": 2, "col":  1, "offset": 32 } }
+            { "type": "keyword",    "value": "var",     "pos": { "line": 1, "col":  1, "offset":  0 } },
+            { "type": "ws",         "value": " ",       "pos": { "line": 1, "col":  4, "offset":  3 } },
+            { "type": "ident",      "value": "name",    "pos": { "line": 1, "col":  5, "offset":  4 } },
+            { "type": "ws",         "value": " ",       "pos": { "line": 1, "col":  9, "offset":  8 } },
+            { "type": "assign",     "value": "=",       "pos": { "line": 1, "col": 10, "offset":  9 } },
+            { "type": "ws",         "value": " ",       "pos": { "line": 1, "col": 11, "offset": 10 } },
+            { "type": "string",     "value": "Maysara", "pos": { "line": 1, "col": 12, "offset": 11 } },
+            { "type": "scolon",     "value": ";",       "pos": { "line": 1, "col": 21, "offset": 20 } },
+            { "type": "comment",    "value": "comment", "pos": { "line": 1, "col": 22, "offset": 21 } },
+            { "type": "nl",         "value": "\n",      "pos": { "line": 1, "col": 32, "offset": 31 } },
+            { "type": "error",      "value": "$",       "pos": { "line": 2, "col":  1, "offset": 32 } }
         ]
         ```
 
@@ -139,42 +139,30 @@ import * as lexer from '@je-es/lexer';
     - #### Types
 
         ```ts
-        // Main lexer class
+        // Lexical analyzer that converts source text into tokens
         class Lexer {
-            constructor(rules: Rules)       // Initialize lexer with rules
-            setup(source: string): void;    // Setup lexer with input
-            next(): Token | undefined;      // Get next token
+            constructor(rules: Rules);         // Initialize lexer with rules
+            setup(source: string): void;       // Setup lexer with input
+            next(): Token | undefined;         // Get next token
         }
-        ```
 
-        ```ts
-        // Represents a single token with type, value, and position
+        // Represents a token with type, value and position information
         interface Token {
-            type            : string;
-            value           : string | null;
-            pos             : { line: number; col: number; offset?: number; };
+            type            : string;          // Token type identifier
+            value           : string | null;   // Token value or null
+            pos             : {                // Token position
+                line: number;                  // Line number (1-based)
+                col: number;                   // Column number (1-based)
+                offset?: number;               // Character offset in source
+            };
         }
-        ```
 
-        ```ts
-        // Advanced rule configuration with custom processing
+        // Configuration for a lexer rule defining how to match and process tokens
         interface RuleConfig {
-            match           : RegExp;
-            value          ?: (text: string) => string;
-            lineBreaks     ?: boolean;
+            match           : RegExp;                       // Pattern to match token
+            value          ?: (text: string) => string;     // Optional value transform
+            lineBreaks     ?: boolean;                      // Track line breaks in token
         }
-        ```
-
-        ```ts
-        // Collection of lexer rules mapping token names to patterns
-        interface Rules {
-            [key: string]   : string | RegExp | string[] | RuleConfig;
-        }
-
-        // string       : `'='` - Matches literal text
-        // RegExp       : `/[a-zA-Z]+/` - Matches pattern
-        // string[]     : `['if', 'else']` - Matches keywords
-        // RuleConfig   : `{ match: /.../, value: fn, lineBreaks: true }` - Advanced rule
         ```
 
 <br>

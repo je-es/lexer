@@ -1,4 +1,6 @@
+/** Represents a value that can be either a string or null */
 type ValueType = string | null;
+/** Represents a token with type, value and position information */
 interface Token {
     type: string;
     value: ValueType;
@@ -8,16 +10,25 @@ interface Token {
         offset?: number;
     };
 }
+/** Configuration for a lexer rule defining how to match and process tokens */
 interface RuleConfig {
     match: RegExp;
     value?: (text: string) => string;
     lineBreaks?: boolean;
 }
+/** Defines a rule that can be a string, RegExp, string array, or RuleConfig */
 type Rule = string | RegExp | string[] | RuleConfig;
+/** Collection of named rules for tokenization */
 interface Rules {
     [key: string]: Rule;
 }
 declare const error: unique symbol;
+/**
+ * Lexical analyzer that converts source text into tokens
+ *
+ * The lexer processes input text according to defined rules and produces
+ * a stream of tokens with type and position information.
+*/
 declare class Lexer {
     private fastRegex;
     private ruleTypes;
@@ -35,6 +46,14 @@ declare class Lexer {
     next(): Token | undefined;
     [Symbol.iterator](): Iterator<Token>;
 }
+/**
+ * Tokenizes source code using the provided rules
+ *
+ * @param source    - The source text to tokenize
+ * @param rules     - Rules defining how to break the source into tokens
+ *
+ * @returns Array of tokens extracted from the source
+*/
 declare function tokenize(source: string, rules: Rules): Token[];
 
 export { Lexer, type Rule, type RuleConfig, type Rules, type Token, type ValueType, error, tokenize };

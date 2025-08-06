@@ -1,4 +1,5 @@
-// lexer.ts — A lightweight, fast, and flexible lexical analyzer for tokenizing source code with zero dependencies.
+// lexer.ts — Fundamental lexical analyzer that transforms
+//            source text into structured tokens with type and position information.
 //
 // repo   : https://github.com/je-es/lexer
 // author : https://github.com/maysara-elshewehy
@@ -9,22 +10,27 @@
 
 // ╔════════════════════════════════════════ INIT ════════════════════════════════════════╗
 
+    /** Represents a value that can be either a string or null */
     export type ValueType = string | null;
 
+    /** Represents a token with type, value and position information */
     export interface Token {
         type        : string;
         value       : ValueType;
         pos         : { line: number; col: number; offset?: number; };
     }
 
+    /** Configuration for a lexer rule defining how to match and process tokens */
     export interface RuleConfig {
         match       : RegExp;
         value      ?: (text: string) => string;
         lineBreaks ?: boolean;
     }
 
+    /** Defines a rule that can be a string, RegExp, string array, or RuleConfig */
     export type Rule = string | RegExp | string[] | RuleConfig;
 
+    /** Collection of named rules for tokenization */
     export interface Rules {
         [key: string]: Rule;
     }
@@ -37,6 +43,12 @@
 
 // ╔════════════════════════════════════════ CORE ════════════════════════════════════════╗
 
+    /**
+     * Lexical analyzer that converts source text into tokens
+     *
+     * The lexer processes input text according to defined rules and produces
+     * a stream of tokens with type and position information.
+    */
     export class Lexer {
         private fastRegex       : RegExp | null                         = null;
         private ruleTypes       : string[]                              = [];
@@ -199,13 +211,14 @@
         }
     }
 
-// ╚══════════════════════════════════════════════════════════════════════════════════════╝
-
-
-
-// ╔════════════════════════════════════════ MAIN ════════════════════════════════════════╗
-
-    // Tokenizes source code using the provided rules
+    /**
+     * Tokenizes source code using the provided rules
+     *
+     * @param source    - The source text to tokenize
+     * @param rules     - Rules defining how to break the source into tokens
+     *
+     * @returns Array of tokens extracted from the source
+    */
     export function tokenize(source: string, rules: Rules): Token[] {
         const sourceLength = source.length;
 
