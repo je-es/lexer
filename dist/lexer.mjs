@@ -1,4 +1,5 @@
-// lib/core.ts
+// lib/lexer.ts
+var error = Symbol("error");
 var Lexer = class {
   constructor(rules) {
     this.fastRegex = null;
@@ -54,7 +55,7 @@ var Lexer = class {
   escapeRegex(str) {
     return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   }
-  reset(input) {
+  setup(input) {
     this.buffer = input;
     this.length = input.length;
     this.position = 0;
@@ -103,9 +104,7 @@ var Lexer = class {
         return {
           type: this.ruleTypes[ruleIndex],
           value,
-          offset: startPos,
-          line: startLine,
-          col: startCol
+          pos: { line: startLine, col: startCol, offset: startPos }
         };
       }
     }
@@ -113,9 +112,7 @@ var Lexer = class {
     const token = {
       type: "error",
       value: char,
-      offset: this.position,
-      line: this.line,
-      col: this.col
+      pos: { line: this.line, col: this.col, offset: this.position }
     };
     this.position++;
     this.col++;
@@ -128,36 +125,29 @@ var Lexer = class {
     }
   }
 };
-var error = Symbol("error");
-function compile(rules) {
-  return new Lexer(rules);
-}
-
-// lib/lexer.ts
-var error2 = error;
-var createRules = compile;
-function tokenize(rules, source_code) {
-  const sourceLength = source_code.length;
+function tokenize(source, rules) {
+  const sourceLength = source.length;
   if (sourceLength === 0) {
     return [];
   }
   const tokens = [];
-  rules.reset(source_code);
-  let token = rules.next();
+  const lexer = new Lexer(rules);
+  lexer.setup(source);
+  let token = lexer.next();
   while (token !== void 0) {
     tokens.push({
       type: token.type,
       value: token.value.length ? token.value : null,
-      pos: { line: token.line, col: token.col }
+      pos: token.pos
     });
     if (token.type === "error") break;
-    token = rules.next();
+    token = lexer.next();
   }
   return tokens;
 }
 export {
-  createRules,
-  error2 as error,
+  Lexer,
+  error,
   tokenize
 };
 //# sourceMappingURL=lexer.mjs.map
