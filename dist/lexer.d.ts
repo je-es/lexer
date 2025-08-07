@@ -1,14 +1,14 @@
-/** Represents a value that can be either a string or null */
-type ValueType = string | null;
 /** Represents a token with type, value and position information */
 interface Token {
     type: string;
-    value: ValueType;
-    pos: {
-        line: number;
-        col: number;
-        offset?: number;
-    };
+    value: string | null;
+    pos: Position;
+}
+/** Represents a position in the source text */
+interface Position {
+    line: number;
+    col: number;
+    offset: number;
 }
 /** Configuration for a lexer rule defining how to match and process tokens */
 interface RuleConfig {
@@ -56,4 +56,4 @@ declare class Lexer {
 */
 declare function tokenize(source: string, rules: Rules): Token[];
 
-export { Lexer, type Rule, type RuleConfig, type Rules, type Token, type ValueType, error, tokenize };
+export { Lexer, type Position, type Rule, type RuleConfig, type Rules, type Token, error, tokenize };

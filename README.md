@@ -40,42 +40,40 @@ import * as lexer from '@je-es/lexer';
 
 - **How to**
 
-    1. #### Create rules
+    > Let's say I want to **create a simple syntax** to handle a simple **arithmetic operations groups** like :
+    >
+    > `(1 + 2), (4 - 3), ..`
+    >
+    > So, I'll need to convert the text into chunks like: (`0-9`, `+`, `-`, `(`, `)`, `,` and `whitespace`).
+
+    1. #### Create lexer rules
 
         ```typescript
         const rules : lexer.Rules = {
-            // Basics
-            ws              : /[ \t]+/,
-            nl              : { match: /\r?\n/, lineBreaks: true,  value: (text: string) => '\n' },
-            comment         : { match: /(?:\/\/(?:.*))/, value: (text: string) => text.slice(2).trim() },
-
-            // Keywords
-            keyword         : ['var'],
-
-            // Identifiers & Literals
-            ident           : /[a-zA-Z_][a-zA-Z0-9_]*/,
-            string          : { match: /"(?:[^"\\]|\\.)*"/, value: (text: string) => text.slice(1, -1) },
-
-            // Operators & Punctuation
-            scolon          : ';',
-            assign          : '=',
+            ws      : /\s/,
+            num     : /\d/,
+            plus    : '+',
+            minus   : '-',
+            open    : '(',
+            close   : ')',
+            comma   : ','
         };
         ```
 
-    2. #### Tokenize source code
+    2. #### String to Tokens
 
         ```typescript
-        const tokens = lexer.tokenize(`var name = "Maysara";// comment\n$`, rules);
+        const tokens = lexer.tokenize(`(1 + 2), (4 - 3)$`, rules);
         ```
 
-        > **OR, if you prefer to control the tokenization process**
+        > **or if you prefer to control the tokenization process :**
 
         ```typescript
         // Initialize lexer with rules
         const myLexer = new lexer.Lexer(rules);
 
         // Setup lexer with input
-        myLexer.setup(`var name = "Maysara";// comment\n$`);
+        myLexer.setup(`(1 + 2), (4 - 3)$`);
 
         // To store tokens
         const tokens: Token[] = [];
@@ -102,19 +100,29 @@ import * as lexer from '@je-es/lexer';
         ```jsonc
         // Output
         [
-            { "type": "keyword",    "value": "var",     "pos": { "line": 1, "col":  1, "offset":  0 } },
-            { "type": "ws",         "value": " ",       "pos": { "line": 1, "col":  4, "offset":  3 } },
-            { "type": "ident",      "value": "name",    "pos": { "line": 1, "col":  5, "offset":  4 } },
-            { "type": "ws",         "value": " ",       "pos": { "line": 1, "col":  9, "offset":  8 } },
-            { "type": "assign",     "value": "=",       "pos": { "line": 1, "col": 10, "offset":  9 } },
-            { "type": "ws",         "value": " ",       "pos": { "line": 1, "col": 11, "offset": 10 } },
-            { "type": "string",     "value": "Maysara", "pos": { "line": 1, "col": 12, "offset": 11 } },
-            { "type": "scolon",     "value": ";",       "pos": { "line": 1, "col": 21, "offset": 20 } },
-            { "type": "comment",    "value": "comment", "pos": { "line": 1, "col": 22, "offset": 21 } },
-            { "type": "nl",         "value": "\n",      "pos": { "line": 1, "col": 32, "offset": 31 } },
-            { "type": "error",      "value": "$",       "pos": { "line": 2, "col":  1, "offset": 32 } }
+            { "type": "open",   "value": "(",   "pos": { "line": 1, "col":  1, "offset":  0 } },
+            { "type": "num",    "value": "1",   "pos": { "line": 1, "col":  2, "offset":  1 } },
+            { "type": "ws",     "value": " ",   "pos": { "line": 1, "col":  3, "offset":  2 } },
+            { "type": "plus",   "value": "+",   "pos": { "line": 1, "col":  4, "offset":  3 } },
+            { "type": "ws",     "value": " ",   "pos": { "line": 1, "col":  5, "offset":  4 } },
+            { "type": "num",    "value": "2",   "pos": { "line": 1, "col":  6, "offset":  5 } },
+            { "type": "close",  "value": ")",   "pos": { "line": 1, "col":  7, "offset":  6 } },
+            { "type": "comma",  "value": ",",   "pos": { "line": 1, "col":  8, "offset":  7 } },
+            { "type": "ws",     "value": " ",   "pos": { "line": 1, "col":  9, "offset":  8 } },
+            { "type": "open",   "value": "(",   "pos": { "line": 1, "col": 10, "offset":  9 } },
+            { "type": "num",    "value": "4",   "pos": { "line": 1, "col": 11, "offset": 10 } },
+            { "type": "ws",     "value": " ",   "pos": { "line": 1, "col": 12, "offset": 11 } },
+            { "type": "minus",  "value": "-",   "pos": { "line": 1, "col": 13, "offset": 12 } },
+            { "type": "ws",     "value": " ",   "pos": { "line": 1, "col": 14, "offset": 13 } },
+            { "type": "num",    "value": "3",   "pos": { "line": 1, "col": 15, "offset": 14 } },
+            { "type": "close",  "value": ")",   "pos": { "line": 1, "col": 16, "offset": 15 } },
+            { "type": "error",  "value": "$",   "pos": { "line": 1, "col": 17, "offset": 16 } }
         ]
         ```
+
+    3. #### Tokens to Abstract Syntax Tree (AST)
+
+        > For the next steps, please see the [`@je-es/parser`](https://github.com/je-es/parser) package.
 
 <br>
 <div align="center">
@@ -127,7 +135,7 @@ import * as lexer from '@je-es/lexer';
 
 <!----------------------------------- API ----------------------------------->
 
-- ### 📖 Metadata
+- ### 📖 API
 
     - #### Functions
 
@@ -186,6 +194,12 @@ import * as lexer from '@je-es/lexer';
 
     - ##### [@je-es/syntax](https://github.com/je-es/syntax)
         > Unified interface for creating custom language modes with simplified lexing and parsing capabilities.
+
+
+<br>
+<div align="center">
+    <img src="https://raw.githubusercontent.com/maysara-elshewehy/SuperZIG-assets/refs/heads/main/dist/img/md/line.png" alt="line" style="display: block; margin-top:20px;margin-bottom:20px;width:500px;"/>
+</div>
 
 <!--------------------------------------------------------------------------->
 

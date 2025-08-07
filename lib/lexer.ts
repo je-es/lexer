@@ -8,16 +8,20 @@
 
 
 
-// ╔════════════════════════════════════════ INIT ════════════════════════════════════════╗
-
-    /** Represents a value that can be either a string or null */
-    export type ValueType = string | null;
+// ╔════════════════════════════════════════ TYPE ════════════════════════════════════════╗
 
     /** Represents a token with type, value and position information */
     export interface Token {
         type        : string;
-        value       : ValueType;
-        pos         : { line: number; col: number; offset?: number; };
+        value       : string | null;
+        pos         : Position;
+    }
+
+    /** Represents a position in the source text */
+    export interface Position {
+        line        : number;
+        col         : number;
+        offset      : number;
     }
 
     /** Configuration for a lexer rule defining how to match and process tokens */
@@ -143,7 +147,7 @@
                 if (match && match.index === this.position) {
                     // Find which group matched - optimized loop
                     let ruleIndex = 0;
-                    let text : ValueType = '';
+                    let text : string | null = '';
 
                     // Start from index 1 (skip full match)
                     for (let i = 1; i < match.length; i++) {
@@ -179,7 +183,7 @@
 
                     // Apply transformation if exists
                     const transform = this.ruleTransforms[ruleIndex];
-                    const value : ValueType = transform ? transform(text) : text;
+                    const value : string | null = transform ? transform(text) : text;
 
                     return {
                         type        : this.ruleTypes[ruleIndex],
@@ -210,6 +214,12 @@
             }
         }
     }
+
+// ╚══════════════════════════════════════════════════════════════════════════════════════╝
+
+
+
+// ╔════════════════════════════════════════ MAIN ════════════════════════════════════════╗
 
     /**
      * Tokenizes source code using the provided rules
