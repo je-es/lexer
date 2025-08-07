@@ -2,7 +2,7 @@
 <br>
 <div align="center">
     <p>
-        <img src="https://raw.githubusercontent.com/je-es/lexer/refs/heads/main/assets/img/logo.png" alt="Lexer" height="80" />
+        <img src="./assets/img/logo.png" alt="lexer" height="80" />
     </p>
 </div>
 
@@ -20,7 +20,7 @@
 </p>
 
 <div align="center">
-    <img src="https://raw.githubusercontent.com/maysara-elshewehy/SuperZIG-assets/refs/heads/main/dist/img/md/line.png" alt="line" style="display: block; margin-top:20px;margin-bottom:20px;width:500px;"/>
+    <img src="./assets/img/line.png" alt="line" style="display: block; margin-top:20px;margin-bottom:20px;width:500px;"/>
 </div>
 <br>
 
@@ -176,7 +176,7 @@ import * as lexer from '@je-es/lexer';
 
 <br>
 <div align="center">
-<img src="https://raw.githubusercontent.com/maysara-elshewehy/SuperZIG-assets/refs/heads/main/dist/img/md/line.png" alt="line" style="display: block; margin-top:20px;margin-bottom:20px;width:500px;"/>
+<img src="./assets/img/line.png" alt="line" style="display: block; margin-top:20px;margin-bottom:20px;width:500px;"/>
 </div>
 
 <!--------------------------------------------------------------------------->
@@ -199,7 +199,7 @@ import * as lexer from '@je-es/lexer';
 
 <br>
 <div align="center">
-    <img src="https://raw.githubusercontent.com/maysara-elshewehy/SuperZIG-assets/refs/heads/main/dist/img/md/line.png" alt="line" style="display: block; margin-top:20px;margin-bottom:20px;width:500px;"/>
+    <img src="./assets/img/line.png" alt="line" style="display: block; margin-top:20px;margin-bottom:20px;width:500px;"/>
 </div>
 
 <!--------------------------------------------------------------------------->
