@@ -30,6 +30,8 @@
 
 <!----------------------------------- HOW ----------------------------------->
 
+## 🚀 Installation
+
 ```bash
 npm install @je-es/lexer
 ```
@@ -38,96 +40,95 @@ npm install @je-es/lexer
 import * as lexer from '@je-es/lexer';
 ```
 
-- **How to**
+<br>
 
-    > Let's say I want to **create a simple syntax** to handle a simple **arithmetic operations groups** like :
-    >
-    > `(1 + 2), (4 - 3), ..`
-    >
-    > So, I'll need to convert the text into chunks like: (`0-9`, `+`, `-`, `(`, `)`, `,` and `whitespace`).
+## 🌟 How to Use
 
-    1. #### Create lexer rules
+> Let's say I want to **create a simple syntax** to handle a simple **arithmetic operations groups** like :
+>
+> `(1 + 2), (4 - 3), ..`
+>
+> So, I'll need to convert the text into chunks like: (`0-9`, `+`, `-`, `(`, `)`, `,` and `whitespace`).
 
-        ```typescript
-        const rules : lexer.Rules = {
-            ws      : /\s/,
-            num     : /\d/,
-            plus    : '+',
-            minus   : '-',
-            open    : '(',
-            close   : ')',
-            comma   : ','
-        };
-        ```
+1. #### Create lexer rules
 
-    2. #### String to Tokens
+    ```typescript
+    const rules : lexer.Rules = {
+        ws      : /\s/,
+        num     : /\d/,
+        plus    : '+',
+        minus   : '-',
+        open    : '(',
+        close   : ')',
+        comma   : ','
+    };
+    ```
 
-        ```typescript
-        const tokens = lexer.tokenize(`(1 + 2), (4 - 3)$`, rules);
-        ```
+2. #### String to Tokens
 
-        > **or if you prefer to control the tokenization process :**
+    ```typescript
+    const tokens = lexer.tokenize(`(1 + 2), (4 - 3)$`, rules);
+    ```
 
-        ```typescript
-        // Initialize lexer with rules
-        const myLexer = new lexer.Lexer(rules);
+    > **or if you prefer to control the tokenization process :**
 
-        // Setup lexer with input
-        myLexer.setup(`(1 + 2), (4 - 3)$`);
+    ```typescript
+    // Initialize lexer with rules
+    const myLexer = new lexer.Lexer(rules);
 
-        // To store tokens
-        const tokens: Token[] = [];
+    // Setup lexer with input
+    myLexer.setup(`(1 + 2), (4 - 3)$`);
 
-        // Optimized token iteration - avoid iterator overhead
-        let token = myLexer.next();
-        while (token !== undefined) {
-            tokens.push({
-                type    : token.type,
-                value   : token.value!.length ? token.value : null,
-                pos     : token.pos
-            });
+    // To store tokens
+    const tokens: Token[] = [];
 
-            // Stop on error to match original behavior
-            if (token.type === "error") break;
+    // Optimized token iteration - avoid iterator overhead
+    let token = myLexer.next();
+    while (token !== undefined) {
+        tokens.push({
+            type    : token.type,
+            value   : token.value!.length ? token.value : null,
+            pos     : token.pos
+        });
 
-            token = myLexer.next();
-        }
+        // Stop on error to match original behavior
+        if (token.type === "error") break;
 
-        // Print tokens
-        console.log(tokens);
-        ```
+        token = myLexer.next();
+    }
 
-        ```jsonc
-        // Output
-        [
-            { "type": "open",   "value": "(",   "pos": { "line": 1, "col":  1, "offset":  0 } },
-            { "type": "num",    "value": "1",   "pos": { "line": 1, "col":  2, "offset":  1 } },
-            { "type": "ws",     "value": " ",   "pos": { "line": 1, "col":  3, "offset":  2 } },
-            { "type": "plus",   "value": "+",   "pos": { "line": 1, "col":  4, "offset":  3 } },
-            { "type": "ws",     "value": " ",   "pos": { "line": 1, "col":  5, "offset":  4 } },
-            { "type": "num",    "value": "2",   "pos": { "line": 1, "col":  6, "offset":  5 } },
-            { "type": "close",  "value": ")",   "pos": { "line": 1, "col":  7, "offset":  6 } },
-            { "type": "comma",  "value": ",",   "pos": { "line": 1, "col":  8, "offset":  7 } },
-            { "type": "ws",     "value": " ",   "pos": { "line": 1, "col":  9, "offset":  8 } },
-            { "type": "open",   "value": "(",   "pos": { "line": 1, "col": 10, "offset":  9 } },
-            { "type": "num",    "value": "4",   "pos": { "line": 1, "col": 11, "offset": 10 } },
-            { "type": "ws",     "value": " ",   "pos": { "line": 1, "col": 12, "offset": 11 } },
-            { "type": "minus",  "value": "-",   "pos": { "line": 1, "col": 13, "offset": 12 } },
-            { "type": "ws",     "value": " ",   "pos": { "line": 1, "col": 14, "offset": 13 } },
-            { "type": "num",    "value": "3",   "pos": { "line": 1, "col": 15, "offset": 14 } },
-            { "type": "close",  "value": ")",   "pos": { "line": 1, "col": 16, "offset": 15 } },
-            { "type": "error",  "value": "$",   "pos": { "line": 1, "col": 17, "offset": 16 } }
-        ]
-        ```
+    // Print tokens
+    console.log(tokens);
+    ```
 
-    3. #### Tokens to Abstract Syntax Tree (AST)
+    ```jsonc
+    // Output
+    [
+        { "type": "open",   "value": "(",   "pos": { "line": 1, "col":  1, "offset":  0 } },
+        { "type": "num",    "value": "1",   "pos": { "line": 1, "col":  2, "offset":  1 } },
+        { "type": "ws",     "value": " ",   "pos": { "line": 1, "col":  3, "offset":  2 } },
+        { "type": "plus",   "value": "+",   "pos": { "line": 1, "col":  4, "offset":  3 } },
+        { "type": "ws",     "value": " ",   "pos": { "line": 1, "col":  5, "offset":  4 } },
+        { "type": "num",    "value": "2",   "pos": { "line": 1, "col":  6, "offset":  5 } },
+        { "type": "close",  "value": ")",   "pos": { "line": 1, "col":  7, "offset":  6 } },
+        { "type": "comma",  "value": ",",   "pos": { "line": 1, "col":  8, "offset":  7 } },
+        { "type": "ws",     "value": " ",   "pos": { "line": 1, "col":  9, "offset":  8 } },
+        { "type": "open",   "value": "(",   "pos": { "line": 1, "col": 10, "offset":  9 } },
+        { "type": "num",    "value": "4",   "pos": { "line": 1, "col": 11, "offset": 10 } },
+        { "type": "ws",     "value": " ",   "pos": { "line": 1, "col": 12, "offset": 11 } },
+        { "type": "minus",  "value": "-",   "pos": { "line": 1, "col": 13, "offset": 12 } },
+        { "type": "ws",     "value": " ",   "pos": { "line": 1, "col": 14, "offset": 13 } },
+        { "type": "num",    "value": "3",   "pos": { "line": 1, "col": 15, "offset": 14 } },
+        { "type": "close",  "value": ")",   "pos": { "line": 1, "col": 16, "offset": 15 } },
+        { "type": "error",  "value": "$",   "pos": { "line": 1, "col": 17, "offset": 16 } }
+    ]
+    ```
 
-        > For the next steps, please see the [`@je-es/parser`](https://github.com/je-es/parser) package.
+3. #### Tokens to Abstract Syntax Tree (AST)
+
+    > For the next steps, please see the [`@je-es/parser`](https://github.com/je-es/parser) package.
 
 <br>
-<div align="center">
-    <img src="https://raw.githubusercontent.com/maysara-elshewehy/SuperZIG-assets/refs/heads/main/dist/img/md/line.png" alt="line" style="display: block; margin-top:20px;margin-bottom:20px;width:500px;"/>
-</div>
 
 <!--------------------------------------------------------------------------->
 
@@ -135,47 +136,47 @@ import * as lexer from '@je-es/lexer';
 
 <!----------------------------------- API ----------------------------------->
 
-- ### 📖 API
+## 📖 API Reference
 
-    - #### Functions
+- #### Functions
 
-        ```ts
-        // Tokenizes source code using the provided rules
-        function tokenize(source: string, rules: Rules): Token[]
-        ```
+    ```ts
+    // Tokenizes source code using the provided rules
+    function tokenize(source: string, rules: Rules): Token[]
+    ```
 
-    - #### Types
+- #### Types
 
-        ```ts
-        // Lexical analyzer that converts source text into tokens
-        class Lexer {
-            constructor(rules: Rules);         // Initialize lexer with rules
-            setup(source: string): void;       // Setup lexer with input
-            next(): Token | undefined;         // Get next token
-        }
+    ```ts
+    // Lexical analyzer that converts source text into tokens
+    class Lexer {
+        constructor(rules: Rules);         // Initialize lexer with rules
+        setup(source: string): void;       // Setup lexer with input
+        next(): Token | undefined;         // Get next token
+    }
 
-        // Represents a token with type, value and position information
-        interface Token {
-            type            : string;          // Token type identifier
-            value           : string | null;   // Token value or null
-            pos             : {                // Token position
-                line: number;                  // Line number (1-based)
-                col: number;                   // Column number (1-based)
-                offset?: number;               // Character offset in source
-            };
-        }
+    // Represents a token with type, value and position information
+    interface Token {
+        type            : string;          // Token type identifier
+        value           : string | null;   // Token value or null
+        pos             : {                // Token position
+            line: number;                  // Line number (1-based)
+            col: number;                   // Column number (1-based)
+            offset?: number;               // Character offset in source
+        };
+    }
 
-        // Configuration for a lexer rule defining how to match and process tokens
-        interface RuleConfig {
-            match           : RegExp;                       // Pattern to match token
-            value          ?: (text: string) => string;     // Optional value transform
-            lineBreaks     ?: boolean;                      // Track line breaks in token
-        }
-        ```
+    // Configuration for a lexer rule defining how to match and process tokens
+    interface RuleConfig {
+        match           : RegExp;                       // Pattern to match token
+        value          ?: (text: string) => string;     // Optional value transform
+        lineBreaks     ?: boolean;                      // Track line breaks in token
+    }
+    ```
 
 <br>
 <div align="center">
-    <img src="https://raw.githubusercontent.com/maysara-elshewehy/SuperZIG-assets/refs/heads/main/dist/img/md/line.png" alt="line" style="display: block; margin-top:20px;margin-bottom:20px;width:500px;"/>
+<img src="https://raw.githubusercontent.com/maysara-elshewehy/SuperZIG-assets/refs/heads/main/dist/img/md/line.png" alt="line" style="display: block; margin-top:20px;margin-bottom:20px;width:500px;"/>
 </div>
 
 <!--------------------------------------------------------------------------->
@@ -186,14 +187,14 @@ import * as lexer from '@je-es/lexer';
 
 - #### 🔗 Related
 
-    - ##### @je-es/lexer
-        > Fundamental lexical analyzer that transforms source text into structured tokens with type and position information.
+  - ##### @je-es/lexer
+      > Fundamental lexical analyzer that transforms source text into structured tokens with type and position information.
 
-    - ##### [@je-es/parser](https://github.com/je-es/parser)
-        > Advanced syntax analyzer that converts tokens into AST with customizable grammar rules and intelligent error detection.
+  - ##### [@je-es/parser](https://github.com/je-es/parser)
+      > Advanced syntax analyzer that converts tokens into AST with customizable grammar rules and intelligent error detection.
 
-    - ##### [@je-es/syntax](https://github.com/je-es/syntax)
-        > Unified interface for creating custom language modes with simplified lexing and parsing capabilities.
+  - ##### [@je-es/syntax](https://github.com/je-es/syntax)
+      > Unified interface for creating custom language modes with simplified lexing and parsing capabilities.
 
 
 <br>
