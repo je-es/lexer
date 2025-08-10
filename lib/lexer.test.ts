@@ -34,17 +34,17 @@
             const tokens = lexer.tokenize(`var name = "Maysara";// comment\n$`, rules);
 
             expect(tokens).toEqual([
-                { "type": "keyword",    "value": "var",         "pos": { "line": 1, "col":  1, "offset":  0 } },
-                { "type": "ws",         "value": " ",           "pos": { "line": 1, "col":  4, "offset":  3 } },
-                { "type": "ident",      "value": "name",        "pos": { "line": 1, "col":  5, "offset":  4 } },
-                { "type": "ws",         "value": " ",           "pos": { "line": 1, "col":  9, "offset":  8 } },
-                { "type": "assign",     "value": "=",           "pos": { "line": 1, "col": 10, "offset":  9 } },
-                { "type": "ws",         "value": " ",           "pos": { "line": 1, "col": 11, "offset": 10 } },
-                { "type": "string",     "value": "Maysara",     "pos": { "line": 1, "col": 12, "offset": 11 } },
-                { "type": "scolon",     "value": ";",           "pos": { "line": 1, "col": 21, "offset": 20 } },
-                { "type": "comment",    "value": "comment",     "pos": { "line": 1, "col": 22, "offset": 21 } },
-                { "type": "nl",         "value": "\n",          "pos": { "line": 1, "col": 32, "offset": 31 } },
-                { "type": "error",      "value": "$",           "pos": { "line": 2, "col":  1, "offset": 32 } }
+                { "range": { "end": { "col":  4, "line": 1, "offset":  3 }, "start": { "col":  1, "line": 1, "offset":  0 } }, "type": "keyword",   "value": "var" },
+                { "range": { "end": { "col":  5, "line": 1, "offset":  4 }, "start": { "col":  4, "line": 1, "offset":  3 } }, "type": "ws",        "value": " " },
+                { "range": { "end": { "col":  9, "line": 1, "offset":  8 }, "start": { "col":  5, "line": 1, "offset":  4 } }, "type": "ident",     "value": "name" },
+                { "range": { "end": { "col": 10, "line": 1, "offset":  9 }, "start": { "col":  9, "line": 1, "offset":  8 } }, "type": "ws",        "value": " " },
+                { "range": { "end": { "col": 11, "line": 1, "offset": 10 }, "start": { "col": 10, "line": 1, "offset":  9 } }, "type": "assign",    "value": "=" },
+                { "range": { "end": { "col": 12, "line": 1, "offset": 11 }, "start": { "col": 11, "line": 1, "offset": 10 } }, "type": "ws",        "value": " " },
+                { "range": { "end": { "col": 21, "line": 1, "offset": 20 }, "start": { "col": 12, "line": 1, "offset": 11 } }, "type": "string",    "value": "Maysara" },
+                { "range": { "end": { "col": 22, "line": 1, "offset": 21 }, "start": { "col": 21, "line": 1, "offset": 20 } }, "type": "scolon",    "value": ";" },
+                { "range": { "end": { "col": 32, "line": 1, "offset": 31 }, "start": { "col": 22, "line": 1, "offset": 21 } }, "type": "comment",   "value": "comment" },
+                { "range": { "end": { "col":  1, "line": 2, "offset": 32 }, "start": { "col": 32, "line": 1, "offset": 31 } }, "type": "nl",        "value": "\n" },
+                { "range": { "end": { "col":  1, "line": 2, "offset": 32 }, "start": { "col":  1, "line": 2, "offset": 32 } }, "type": "error",     "value": "$" }
             ]);
         });
 
@@ -80,9 +80,12 @@
             };
 
             const tokens = lexer.tokenize('hello\nworld', rules);
-            expect(tokens[0].pos).toEqual({ line: 1, col: 1, offset: 0 });
-            expect(tokens[1].pos).toEqual({ line: 1, col: 6, offset: 5 });
-            expect(tokens[2].pos).toEqual({ line: 2, col: 1, offset: 6 });
+            expect(tokens[0].range.start).toEqual({ line: 1, col: 1, offset: 0 });
+            expect(tokens[0].range.end  ).toEqual({ line: 1, col: 6, offset: 5 });
+            expect(tokens[1].range.start).toEqual({ line: 1, col: 6, offset: 5 });
+            expect(tokens[1].range.end  ).toEqual({ line: 2, col: 1, offset: 6 });
+            expect(tokens[2].range.start).toEqual({ line: 2, col: 1, offset: 6 });
+            expect(tokens[2].range.end  ).toEqual({ line: 2, col: 6, offset: 11 });
         });
 
     });

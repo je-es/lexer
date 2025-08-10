@@ -104,7 +104,10 @@ var Lexer = class {
         return {
           type: this.ruleTypes[ruleIndex],
           value,
-          pos: { line: startLine, col: startCol, offset: startPos }
+          range: {
+            start: { line: startLine, col: startCol, offset: startPos },
+            end: { line: this.line, col: this.col, offset: this.position }
+          }
         };
       }
     }
@@ -112,7 +115,10 @@ var Lexer = class {
     const token = {
       type: "error",
       value: char,
-      pos: { line: this.line, col: this.col, offset: this.position }
+      range: {
+        start: { line: this.line, col: this.col, offset: this.position },
+        end: { line: this.line, col: this.col, offset: this.position }
+      }
     };
     this.position++;
     this.col++;
@@ -138,7 +144,7 @@ function tokenize(source, rules) {
     tokens.push({
       type: token.type,
       value: token.value.length ? token.value : null,
-      pos: token.pos
+      range: token.range
     });
     if (token.type === "error") break;
     token = lexer.next();

@@ -14,7 +14,7 @@
     export interface Token {
         type        : string;
         value       : string | null;
-        pos         : Position;
+        range       : Range;
     }
 
     /** Represents a position in the source text */
@@ -22,6 +22,12 @@
         line        : number;
         col         : number;
         offset      : number;
+    }
+
+    /** Represents a range in the source text */
+    export interface Range {
+        start       : Position;
+        end         : Position;
     }
 
     /** Configuration for a lexer rule defining how to match and process tokens */
@@ -188,7 +194,10 @@
                     return {
                         type        : this.ruleTypes[ruleIndex],
                         value,
-                        pos         : { line: startLine, col: startCol, offset: startPos }
+                        range       : {
+                            start: { line: startLine, col: startCol, offset: startPos },
+                            end  : { line: this.line, col: this.col, offset: this.position }
+                        }
                     };
                 }
             }
@@ -198,7 +207,10 @@
             const token = {
                 type        : 'error',
                 value       : char,
-                pos         : { line: this.line, col: this.col, offset: this.position }
+                range       : {
+                    start: { line: this.line, col: this.col, offset: this.position },
+                    end  : { line: this.line, col: this.col, offset: this.position }
+                }
             };
 
             this.position++;
@@ -250,7 +262,7 @@
             tokens.push({
                 type    : token.type,
                 value   : token.value!.length ? token.value : null,
-                pos     : token.pos
+                range   : token.range
             });
 
             // Stop on error to match original behavior

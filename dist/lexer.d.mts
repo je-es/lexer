@@ -2,13 +2,18 @@
 interface Token {
     type: string;
     value: string | null;
-    pos: Position;
+    range: Range;
 }
 /** Represents a position in the source text */
 interface Position {
     line: number;
     col: number;
     offset: number;
+}
+/** Represents a range in the source text */
+interface Range {
+    start: Position;
+    end: Position;
 }
 /** Configuration for a lexer rule defining how to match and process tokens */
 interface RuleConfig {
@@ -56,4 +61,4 @@ declare class Lexer {
 */
 declare function tokenize(source: string, rules: Rules): Token[];
 
-export { Lexer, type Position, type Rule, type RuleConfig, type Rules, type Token, error, tokenize };
+export { Lexer, type Position, type Range, type Rule, type RuleConfig, type Rules, type Token, error, tokenize };
