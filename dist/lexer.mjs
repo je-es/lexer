@@ -8,8 +8,6 @@ var Lexer = class {
     this.ruleLineBreaks = [];
     this.buffer = "";
     this.position = 0;
-    this.line = 1;
-    this.col = 1;
     this.length = 0;
     this.compileRules(rules);
   }
@@ -59,8 +57,6 @@ var Lexer = class {
     this.buffer = input;
     this.length = input.length;
     this.position = 0;
-    this.line = 1;
-    this.col = 1;
     if (this.fastRegex) {
       this.fastRegex.lastIndex = 0;
     }
@@ -82,32 +78,15 @@ var Lexer = class {
             break;
           }
         }
-        const startLine = this.line;
-        const startCol = this.col;
         const startPos = this.position;
         const textLength = text.length;
         this.position += textLength;
-        if (this.ruleLineBreaks[ruleIndex]) {
-          for (let i = 0; i < textLength; i++) {
-            if (text.charCodeAt(i) === 10) {
-              this.line++;
-              this.col = 1;
-            } else {
-              this.col++;
-            }
-          }
-        } else {
-          this.col += textLength;
-        }
         const transform = this.ruleTransforms[ruleIndex];
         const value = transform ? transform(text) : text;
         return {
           type: this.ruleTypes[ruleIndex],
           value,
-          range: {
-            start: { line: startLine, col: startCol, offset: startPos },
-            end: { line: this.line, col: this.col, offset: this.position }
-          }
+          span: { start: startPos, end: this.position }
         };
       }
     }
@@ -115,13 +94,9 @@ var Lexer = class {
     const token = {
       type: "error",
       value: char,
-      range: {
-        start: { line: this.line, col: this.col, offset: this.position },
-        end: { line: this.line, col: this.col, offset: this.position }
-      }
+      span: { start: this.position, end: this.position }
     };
     this.position++;
-    this.col++;
     return token;
   }
   *[Symbol.iterator]() {
@@ -144,7 +119,7 @@ function tokenize(source, rules) {
     tokens.push({
       type: token.type,
       value: token.value.length ? token.value : null,
-      range: token.range
+      span: token.span
     });
     if (token.type === "error") break;
     token = lexer.next();

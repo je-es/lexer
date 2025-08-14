@@ -15,7 +15,7 @@
 
 <p align="center" style="font-style:italic; color:gray">
     A fundamental module that scans source text and breaks it down <br>
-    into distinct tokens with information about each token's type and range.<br>
+    into distinct tokens with information about each token's type and position.<br>
     It transforms raw text into a structured representation that can be processed in subsequent stages.
 </p>
 
@@ -88,7 +88,7 @@ import * as lexer from '@je-es/lexer';
         tokens.push({
             type    : token.type,
             value   : token.value!.length ? token.value : null,
-            range   : token.range
+            span    : token.span
         });
 
         // Stop on error to match original behavior
@@ -104,17 +104,17 @@ import * as lexer from '@je-es/lexer';
     ```jsonc
     // Output
     [
-        { "type": "keyword",   "value": "var",      "range": { .. } },
-        { "type": "ws",        "value": " ",        "range": { .. } },
-        { "type": "ident",     "value": "name",     "range": { .. } },
-        { "type": "ws",        "value": " ",        "range": { .. } },
-        { "type": "assign",    "value": "=",        "range": { .. } },
-        { "type": "ws",        "value": " ",        "range": { .. } },
-        { "type": "string",    "value": "Maysara",  "range": { .. } },
-        { "type": "scolon",    "value": ";",        "range": { .. } },
-        { "type": "comment",   "value": "comment",  "range": { .. } },
-        { "type": "nl",        "value": "\n",       "range": { .. } },
-        { "type": "error",     "value": "$",        "range": { .. } }
+        { "type": "keyword",   "value": "var",      "span": { "start":  0, "end":  3 } },
+        { "type": "ws",        "value": " ",        "span": { "start":  3, "end":  4 } },
+        { "type": "ident",     "value": "name",     "span": { "start":  4, "end":  8 } },
+        { "type": "ws",        "value": " ",        "span": { "start":  8, "end":  9 } },
+        { "type": "assign",    "value": "=",        "span": { "start":  9, "end": 10 } },
+        { "type": "ws",        "value": " ",        "span": { "start": 10, "end": 11 } },
+        { "type": "string",    "value": "Maysara",  "span": { "start": 11, "end": 20 } },
+        { "type": "scolon",    "value": ";",        "span": { "start": 20, "end": 21 } },
+        { "type": "comment",   "value": "comment",  "span": { "start": 21, "end": 31 } },
+        { "type": "nl",        "value": "\n",       "span": { "start": 31, "end": 32 } },
+        { "type": "error",     "value": "$",        "span": { "start": 32, "end": 32 } }
     ]
     ```
 
@@ -158,20 +158,13 @@ import * as lexer from '@je-es/lexer';
     interface Token {
         type            : string;           // Token type identifier
         value           : string | null;    // Token value or null
-        range           : Range;            // Token range in source text
+        span            : Span;             // Token span in source text
     }
 
-    // Represents a position in the source text
-    interface Position {
-        line            : number;
-        col             : number;
-        offset          : number;
-    }
-
-    // Represents a range in the source text
-    interface Range {
-        start           : Position;
-        end             : Position;
+    // Represents a span in the source text
+    interface Span {
+        start           : number;
+        end             : number;
     }
 
     // Configuration for a lexer rule defining how to match and process tokens
@@ -196,7 +189,7 @@ import * as lexer from '@je-es/lexer';
 - #### 🔗 Related
 
   - ##### @je-es/lexer
-      > Fundamental lexical analyzer that transforms source text into structured tokens with type and range/position information.
+      > Fundamental lexical analyzer that transforms source text into structured tokens with type and position information.
 
   - ##### [@je-es/parser](https://github.com/je-es/parser)
       > Advanced syntax analyzer that converts tokens into AST with customizable grammar rules and intelligent error detection.

@@ -34,17 +34,17 @@
             const tokens = lexer.tokenize(`var name = "Maysara";// comment\n$`, rules);
 
             expect(tokens).toEqual([
-                { "range": { "start": { "col":  1, "line": 1, "offset":  0 }, "end": { "col":  4, "line": 1, "offset":  3 } }, "type": "keyword",   "value": "var"      },
-                { "range": { "start": { "col":  4, "line": 1, "offset":  3 }, "end": { "col":  5, "line": 1, "offset":  4 } }, "type": "ws",        "value": " "        },
-                { "range": { "start": { "col":  5, "line": 1, "offset":  4 }, "end": { "col":  9, "line": 1, "offset":  8 } }, "type": "ident",     "value": "name"     },
-                { "range": { "start": { "col":  9, "line": 1, "offset":  8 }, "end": { "col": 10, "line": 1, "offset":  9 } }, "type": "ws",        "value": " "        },
-                { "range": { "start": { "col": 10, "line": 1, "offset":  9 }, "end": { "col": 11, "line": 1, "offset": 10 } }, "type": "assign",    "value": "="        },
-                { "range": { "start": { "col": 11, "line": 1, "offset": 10 }, "end": { "col": 12, "line": 1, "offset": 11 } }, "type": "ws",        "value": " "        },
-                { "range": { "start": { "col": 12, "line": 1, "offset": 11 }, "end": { "col": 21, "line": 1, "offset": 20 } }, "type": "string",    "value": "Maysara"  },
-                { "range": { "start": { "col": 21, "line": 1, "offset": 20 }, "end": { "col": 22, "line": 1, "offset": 21 } }, "type": "scolon",    "value": ";"        },
-                { "range": { "start": { "col": 22, "line": 1, "offset": 21 }, "end": { "col": 32, "line": 1, "offset": 31 } }, "type": "comment",   "value": "comment"  },
-                { "range": { "start": { "col": 32, "line": 1, "offset": 31 }, "end": { "col":  1, "line": 2, "offset": 32 } }, "type": "nl",        "value": "\n"       },
-                { "range": { "start": { "col":  1, "line": 2, "offset": 32 }, "end": { "col":  1, "line": 2, "offset": 32 } }, "type": "error",     "value": "$"        }
+                { "type": "keyword",   "value": "var",      "span": { "start":  0, "end":  3 } },
+                { "type": "ws",        "value": " ",        "span": { "start":  3, "end":  4 } },
+                { "type": "ident",     "value": "name",     "span": { "start":  4, "end":  8 } },
+                { "type": "ws",        "value": " ",        "span": { "start":  8, "end":  9 } },
+                { "type": "assign",    "value": "=",        "span": { "start":  9, "end": 10 } },
+                { "type": "ws",        "value": " ",        "span": { "start": 10, "end": 11 } },
+                { "type": "string",    "value": "Maysara",  "span": { "start": 11, "end": 20 } },
+                { "type": "scolon",    "value": ";",        "span": { "start": 20, "end": 21 } },
+                { "type": "comment",   "value": "comment",  "span": { "start": 21, "end": 31 } },
+                { "type": "nl",        "value": "\n",       "span": { "start": 31, "end": 32 } },
+                { "type": "error",     "value": "$",        "span": { "start": 32, "end": 32 } }
             ]);
         });
 
@@ -80,12 +80,12 @@
             };
 
             const tokens = lexer.tokenize('hello\nworld', rules);
-            expect(tokens[0].range.start).toEqual({ line: 1, col: 1, offset: 0 });
-            expect(tokens[0].range.end  ).toEqual({ line: 1, col: 6, offset: 5 });
-            expect(tokens[1].range.start).toEqual({ line: 1, col: 6, offset: 5 });
-            expect(tokens[1].range.end  ).toEqual({ line: 2, col: 1, offset: 6 });
-            expect(tokens[2].range.start).toEqual({ line: 2, col: 1, offset: 6 });
-            expect(tokens[2].range.end  ).toEqual({ line: 2, col: 6, offset: 11 });
+            expect(tokens[0].span.start).toEqual(0);
+            expect(tokens[0].span.end  ).toEqual(5);
+            expect(tokens[1].span.start).toEqual(5);
+            expect(tokens[1].span.end  ).toEqual(6);
+            expect(tokens[2].span.start).toEqual(6);
+            expect(tokens[2].span.end  ).toEqual(11);
         });
 
     });

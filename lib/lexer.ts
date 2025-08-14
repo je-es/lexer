@@ -14,20 +14,13 @@
     export interface Token {
         type        : string;
         value       : string | null;
-        range       : Range;
+        span        : Span;
     }
 
-    /** Represents a position in the source text */
-    export interface Position {
-        line        : number;
-        col         : number;
-        offset      : number;
-    }
-
-    /** Represents a range in the source text */
-    export interface Range {
-        start       : Position;
-        end         : Position;
+    // Represents a span in the source text
+    export interface Span {
+        start           : number;
+        end             : number;
     }
 
     /** Configuration for a lexer rule defining how to match and process tokens */
@@ -66,8 +59,6 @@
         private ruleLineBreaks  : boolean[]                             = [];
         private buffer          : string                                = '';
         private position        : number                                = 0;
-        private line            : number                                = 1;
-        private col             : number                                = 1;
         private length          : number                                = 0;
 
         constructor(rules: Rules) {
@@ -132,8 +123,6 @@
             this.buffer = input;
             this.length = input.length;
             this.position = 0;
-            this.line = 1;
-            this.col = 1;
 
             if (this.fastRegex) {
                 this.fastRegex.lastIndex = 0;
@@ -164,28 +153,11 @@
                         }
                     }
 
-                    const startLine = this.line;
-                    const startCol = this.col;
                     const startPos = this.position;
                     const textLength = text.length;
 
                     // Update position
                     this.position += textLength;
-
-                    // Optimized line/col tracking
-                    if (this.ruleLineBreaks[ruleIndex]) {
-                        // Fast newline counting
-                        for (let i = 0; i < textLength; i++) {
-                            if (text.charCodeAt(i) === 10) { // '\n'
-                                this.line++;
-                                this.col = 1;
-                            } else {
-                                this.col++;
-                            }
-                        }
-                    } else {
-                        this.col += textLength;
-                    }
 
                     // Apply transformation if exists
                     const transform = this.ruleTransforms[ruleIndex];
@@ -194,10 +166,7 @@
                     return {
                         type        : this.ruleTypes[ruleIndex],
                         value,
-                        range       : {
-                            start: { line: startLine, col: startCol, offset: startPos },
-                            end  : { line: this.line, col: this.col, offset: this.position }
-                        }
+                        span        : { start: startPos, end: this.position },
                     };
                 }
             }
@@ -207,14 +176,10 @@
             const token = {
                 type        : 'error',
                 value       : char,
-                range       : {
-                    start: { line: this.line, col: this.col, offset: this.position },
-                    end  : { line: this.line, col: this.col, offset: this.position }
-                }
+                span        : { start: this.position, end: this.position },
             };
 
             this.position++;
-            this.col++;
 
             return token;
         }
@@ -262,7 +227,7 @@
             tokens.push({
                 type    : token.type,
                 value   : token.value!.length ? token.value : null,
-                range   : token.range
+                span    : token.span
             });
 
             // Stop on error to match original behavior
