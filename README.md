@@ -15,7 +15,7 @@
 
 <p align="center" style="font-style:italic; color:gray">
     A fundamental module that scans source text and breaks it down <br>
-    into distinct tokens with information about each token's type and position.<br>
+    into distinct tokens with information about each token's kind and position.<br>
     It transforms raw text into a structured representation that can be processed in subsequent stages.
 </p>
 
@@ -86,13 +86,13 @@ import * as lexer from '@je-es/lexer';
     let token = myLexer.next();
     while (token !== undefined) {
         tokens.push({
-            type    : token.type,
+            kind    : token.kind,
             value   : token.value!.length ? token.value : null,
             span    : token.span
         });
 
         // Stop on error to match original behavior
-        if (token.type === "error") break;
+        if (token.kind === "error") break;
 
         token = myLexer.next();
     }
@@ -104,17 +104,17 @@ import * as lexer from '@je-es/lexer';
     ```jsonc
     // Output
     [
-        { "type": "keyword",   "value": "var",      "span": { "start":  0, "end":  3 } },
-        { "type": "ws",        "value": " ",        "span": { "start":  3, "end":  4 } },
-        { "type": "ident",     "value": "name",     "span": { "start":  4, "end":  8 } },
-        { "type": "ws",        "value": " ",        "span": { "start":  8, "end":  9 } },
-        { "type": "assign",    "value": "=",        "span": { "start":  9, "end": 10 } },
-        { "type": "ws",        "value": " ",        "span": { "start": 10, "end": 11 } },
-        { "type": "string",    "value": "Maysara",  "span": { "start": 11, "end": 20 } },
-        { "type": "scolon",    "value": ";",        "span": { "start": 20, "end": 21 } },
-        { "type": "comment",   "value": "comment",  "span": { "start": 21, "end": 31 } },
-        { "type": "nl",        "value": "\n",       "span": { "start": 31, "end": 32 } },
-        { "type": "error",     "value": "$",        "span": { "start": 32, "end": 32 } }
+        { "kind": "keyword",   "value": "var",      "span": { "start":  0, "end":  3 } },
+        { "kind": "ws",        "value": " ",        "span": { "start":  3, "end":  4 } },
+        { "kind": "ident",     "value": "name",     "span": { "start":  4, "end":  8 } },
+        { "kind": "ws",        "value": " ",        "span": { "start":  8, "end":  9 } },
+        { "kind": "assign",    "value": "=",        "span": { "start":  9, "end": 10 } },
+        { "kind": "ws",        "value": " ",        "span": { "start": 10, "end": 11 } },
+        { "kind": "string",    "value": "Maysara",  "span": { "start": 11, "end": 20 } },
+        { "kind": "scolon",    "value": ";",        "span": { "start": 20, "end": 21 } },
+        { "kind": "comment",   "value": "comment",  "span": { "start": 21, "end": 31 } },
+        { "kind": "nl",        "value": "\n",       "span": { "start": 31, "end": 32 } },
+        { "kind": "error",     "value": "$",        "span": { "start": 32, "end": 32 } }
     ]
     ```
 
@@ -154,9 +154,9 @@ import * as lexer from '@je-es/lexer';
         next(): Token | undefined;
     }
 
-    // Represents a token with type, value and position information
+    // Represents a token with kind, value and position information
     interface Token {
-        type            : string;           // Token type identifier
+        kind            : string;           // Token kind
         value           : string | null;    // Token value or null
         span            : Span;             // Token span in source text
     }
@@ -189,7 +189,7 @@ import * as lexer from '@je-es/lexer';
 - #### 🔗 Related
 
   - ##### @je-es/lexer
-      > Fundamental lexical analyzer that transforms source text into structured tokens with type and position information.
+      > Fundamental lexical analyzer that transforms source text into structured tokens with kind and position information.
 
   - ##### [@je-es/parser](https://github.com/je-es/parser)
       > Advanced syntax analyzer that converts tokens into AST with customizable grammar rules and intelligent error detection.
@@ -197,6 +197,8 @@ import * as lexer from '@je-es/lexer';
   - ##### [@je-es/syntax](https://github.com/je-es/syntax)
       > Unified wrapper that streamlines syntax creation with integrated lexer-parser coordination, LSP support, and enhanced linting capabilities.
 
+  - ##### [@je-es/program](https://github.com/je-es/program)
+      > A high-performance, type-safe program representation library with advanced semantic analysis for programming languages.
 
 <br>
 <div align="center">

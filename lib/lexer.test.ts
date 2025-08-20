@@ -34,17 +34,17 @@
             const tokens = lexer.tokenize(`var name = "Maysara";// comment\n$`, rules);
 
             expect(tokens).toEqual([
-                { "type": "keyword",   "value": "var",      "span": { "start":  0, "end":  3 } },
-                { "type": "ws",        "value": " ",        "span": { "start":  3, "end":  4 } },
-                { "type": "ident",     "value": "name",     "span": { "start":  4, "end":  8 } },
-                { "type": "ws",        "value": " ",        "span": { "start":  8, "end":  9 } },
-                { "type": "assign",    "value": "=",        "span": { "start":  9, "end": 10 } },
-                { "type": "ws",        "value": " ",        "span": { "start": 10, "end": 11 } },
-                { "type": "string",    "value": "Maysara",  "span": { "start": 11, "end": 20 } },
-                { "type": "scolon",    "value": ";",        "span": { "start": 20, "end": 21 } },
-                { "type": "comment",   "value": "comment",  "span": { "start": 21, "end": 31 } },
-                { "type": "nl",        "value": "\n",       "span": { "start": 31, "end": 32 } },
-                { "type": "error",     "value": "$",        "span": { "start": 32, "end": 32 } }
+                { "kind": "keyword",   "value": "var",      "span": { "start":  0, "end":  3 } },
+                { "kind": "ws",        "value": " ",        "span": { "start":  3, "end":  4 } },
+                { "kind": "ident",     "value": "name",     "span": { "start":  4, "end":  8 } },
+                { "kind": "ws",        "value": " ",        "span": { "start":  8, "end":  9 } },
+                { "kind": "assign",    "value": "=",        "span": { "start":  9, "end": 10 } },
+                { "kind": "ws",        "value": " ",        "span": { "start": 10, "end": 11 } },
+                { "kind": "string",    "value": "Maysara",  "span": { "start": 11, "end": 20 } },
+                { "kind": "scolon",    "value": ";",        "span": { "start": 20, "end": 21 } },
+                { "kind": "comment",   "value": "comment",  "span": { "start": 21, "end": 31 } },
+                { "kind": "nl",        "value": "\n",       "span": { "start": 31, "end": 32 } },
+                { "kind": "error",     "value": "$",        "span": { "start": 32, "end": 32 } }
             ]);
         });
 
@@ -65,11 +65,11 @@
             };
 
             const tokens = lexer.tokenize('if else foo', rules);
-            expect(tokens[0].type ).toBe("keyword");
+            expect(tokens[0].kind ).toBe("keyword");
             expect(tokens[0].value).toBe("if");
-            expect(tokens[2].type ).toBe("keyword");
+            expect(tokens[2].kind ).toBe("keyword");
             expect(tokens[2].value).toBe("else");
-            expect(tokens[4].type ).toBe("ident");
+            expect(tokens[4].kind ).toBe("ident");
             expect(tokens[4].value).toBe("foo");
         });
 

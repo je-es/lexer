@@ -1,5 +1,5 @@
 // lexer.ts — Fundamental lexical analyzer that transforms
-//            source text into structured tokens with type and position information.
+//            source text into structured tokens with kind and position information.
 //
 // repo   : https://github.com/je-es/lexer
 // author : https://github.com/maysara-elshewehy
@@ -10,9 +10,9 @@
 
 // ╔════════════════════════════════════════ TYPE ════════════════════════════════════════╗
 
-    /** Represents a token with type, value and position information */
+    /** Represents a token with kind, value and position information */
     export interface Token {
-        type        : string;
+        kind        : string;
         value       : string | null;
         span        : Span;
     }
@@ -164,7 +164,7 @@
                     const value : string | null = transform ? transform(text) : text;
 
                     return {
-                        type        : this.ruleTypes[ruleIndex],
+                        kind        : this.ruleTypes[ruleIndex],
                         value,
                         span        : { start: startPos, end: this.position },
                     };
@@ -174,7 +174,7 @@
             // Fallback: error token
             const char = this.buffer[this.position];
             const token = {
-                type        : 'error',
+                kind        : 'error',
                 value       : char,
                 span        : { start: this.position, end: this.position },
             };
@@ -225,13 +225,13 @@
         let token = lexer.next();
         while (token !== undefined) {
             tokens.push({
-                type    : token.type,
+                kind    : token.kind,
                 value   : token.value!.length ? token.value : null,
                 span    : token.span
             });
 
             // Stop on error to match original behavior
-            if (token.type === "error") break;
+            if (token.kind === "error") break;
 
             token = lexer.next();
         }

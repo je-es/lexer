@@ -110,7 +110,7 @@ var Lexer = class {
         const transform = this.ruleTransforms[ruleIndex];
         const value = transform ? transform(text) : text;
         return {
-          type: this.ruleTypes[ruleIndex],
+          kind: this.ruleTypes[ruleIndex],
           value,
           span: { start: startPos, end: this.position }
         };
@@ -118,7 +118,7 @@ var Lexer = class {
     }
     const char = this.buffer[this.position];
     const token = {
-      type: "error",
+      kind: "error",
       value: char,
       span: { start: this.position, end: this.position }
     };
@@ -143,11 +143,11 @@ function tokenize(source, rules) {
   let token = lexer.next();
   while (token !== void 0) {
     tokens.push({
-      type: token.type,
+      kind: token.kind,
       value: token.value.length ? token.value : null,
       span: token.span
     });
-    if (token.type === "error") break;
+    if (token.kind === "error") break;
     token = lexer.next();
   }
   return tokens;

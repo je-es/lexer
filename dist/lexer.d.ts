@@ -1,6 +1,6 @@
-/** Represents a token with type, value and position information */
+/** Represents a token with kind, value and position information */
 interface Token {
-    type: string;
+    kind: string;
     value: string | null;
     span: Span;
 }
