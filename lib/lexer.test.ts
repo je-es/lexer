@@ -60,17 +60,19 @@
         it("should handle keywords", () => {
             const rules = {
                 keyword : ['if', 'else'],
-                ident   : /[a-zA-Z]+/,
+                ident   : /[a-zA-Z_][a-zA-Z0-9_]*/,
                 ws      : /\s+/
             };
 
-            const tokens = lexer.tokenize('if else foo', rules);
+            const tokens = lexer.tokenize('if else foo if_xx', rules);
             expect(tokens[0].kind ).toBe("keyword");
             expect(tokens[0].value).toBe("if");
             expect(tokens[2].kind ).toBe("keyword");
             expect(tokens[2].value).toBe("else");
             expect(tokens[4].kind ).toBe("ident");
             expect(tokens[4].value).toBe("foo");
+            expect(tokens[6].kind ).toBe("ident");
+            expect(tokens[6].value).toBe("if_xx");
         });
 
         it("should handle line breaks", () => {

@@ -28,9 +28,9 @@ var Lexer = class {
         pattern = rule.source;
       } else if (Array.isArray(rule)) {
         if (rule.length === 1) {
-          pattern = `${this.escapeRegex(rule[0])}(?![a-zA-Z0-9_])`;
+          pattern = `\\b${this.escapeRegex(rule[0])}\\b`;
         } else {
-          pattern = `(?:${rule.map((k) => this.escapeRegex(k)).join("|")})(?![a-zA-Z0-9_])`;
+          pattern = `\\b(?:${rule.map((k) => this.escapeRegex(k)).join("|")})\\b`;
         }
       } else {
         const config = rule;

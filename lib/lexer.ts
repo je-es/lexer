@@ -5,6 +5,7 @@
 // author : https://github.com/maysara-elshewehy
 //
 // Developed with ❤️ by Maysara.
+// FIXED: Proper word boundary handling for keywords
 
 
 
@@ -51,6 +52,8 @@
      *
      * The lexer processes input text according to defined rules and produces
      * a stream of tokens with type and position information.
+     * 
+     * FIXED: Proper word boundary handling for keywords
     */
     export class Lexer {
         private fastRegex       : RegExp | null                         = null;
@@ -84,11 +87,12 @@
                 } else if (rule instanceof RegExp) {
                     pattern = rule.source;
                 } else if (Array.isArray(rule)) {
-                    // Keywords with word boundaries - optimize common case
+                    // FIXED: Use proper word boundaries for keywords
+                    // This ensures keywords match only as complete words
                     if (rule.length === 1) {
-                        pattern = `${this.escapeRegex(rule[0])}(?![a-zA-Z0-9_])`;
+                        pattern = `\\b${this.escapeRegex(rule[0])}\\b`;
                     } else {
-                        pattern = `(?:${rule.map(k => this.escapeRegex(k)).join('|')})(?![a-zA-Z0-9_])`;
+                        pattern = `\\b(?:${rule.map(k => this.escapeRegex(k)).join('|')})\\b`;
                     }
                 } else {
                     // RuleConfig
@@ -172,8 +176,8 @@
             }
 
             // Fallback: error token
-            const char = this.buffer[this.position];
-            const token = {
+            const char      = this.buffer[this.position];
+            const token     = {
                 kind        : 'error',
                 value       : char,
                 span        : { start: this.position, end: this.position },

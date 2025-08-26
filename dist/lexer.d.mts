@@ -26,6 +26,8 @@ declare const error: unique symbol;
  *
  * The lexer processes input text according to defined rules and produces
  * a stream of tokens with type and position information.
+ *
+ * FIXED: Proper word boundary handling for keywords
 */
 declare class Lexer {
     private fastRegex;
