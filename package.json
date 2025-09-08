@@ -1,6 +1,6 @@
 {
 	"name": "@je-es/lexer",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "A tool for converting text into tokens.",
 	"keywords": [ "je-es", "lexer", "tool", "convert", "text", "tokens" ],
 	"license": "MIT",

@@ -34,9 +34,7 @@
     export type Rule = string | RegExp | string[] | RuleConfig;
 
     // Collection of named rules for tokenization
-    export interface Rules {
-        [key: string]       : Rule;
-    }
+    export type Rules = Record<string, Rule>;
 
     // Options for tokenization behavior
     export interface TokenizeOptions {
@@ -155,6 +153,13 @@
             private compileRules(rules: Rules): void {
                 const compiledRules: CompiledRule[] = [];
 
+                // String to Array
+                for (const [name, rule] of Object.entries(rules)) {
+                    if (typeof rule === 'string') {
+                        rules[name] = [rule];
+                    }
+                }
+
                 // First pass: compile all rules with proper prioritization
                 for (const [name, rule] of Object.entries(rules)) {
                     if (typeof rule === 'symbol' && rule === error) { continue; }
@@ -206,14 +211,7 @@
 
             private compileRule(name: string, rule: Rule): CompiledRule[] {
                 if (typeof rule === 'string') {
-                    return [{
-                        pattern: this.escapeRegex(rule),
-                        name,
-                        transform       : null,
-                        lineBreaks      : false,
-                        priority        : this.calculateBasePriority('string') + rule.length * 10,
-                        originalLength  : rule.length
-                    }];
+                    throw new Error('String rules should be converted to string arrays before compilation.');
                 }
 
                 if (rule instanceof RegExp) {
@@ -228,7 +226,6 @@
                 }
 
                 if (Array.isArray(rule)) {
-                    // Smart array handling - this was the root cause of your issue
                     return this.compileStringArray(name, rule);
                 }
 
@@ -257,9 +254,10 @@
 
                 // Handle keywords with word boundaries
                 if (keywords.length > 0) {
-                    const pattern = keywords.length === 1
-                        ? `\\b${this.escapeRegex(keywords[0])}\\b`
-                        : `\\b(?:${keywords.map(k => this.escapeRegex(k)).join('|')})\\b`;
+                    // const pattern = keywords.length === 1
+                    //     ? `\\b${this.escapeRegex(keywords[0])}\\b`
+                    //     : `\\b(?:${keywords.map(k => this.escapeRegex(k)).join('|')})\\b`;
+                    const pattern = `\\b(?:${keywords.map(k => this.escapeRegex(k)).join('|')})\\b`;
 
                     results.push({
                         pattern,
@@ -273,9 +271,7 @@
 
                 // Handle operators/punctuation without word boundaries
                 if (operators.length > 0) {
-                    const pattern = operators.length === 1
-                        ? this.escapeRegex(operators[0])
-                        : `(?:${operators.map(o => this.escapeRegex(o)).join('|')})`;
+                    const pattern = `(?:${operators.map(o => this.escapeRegex(o)).join('|')})`;
 
                     results.push({
                         pattern,

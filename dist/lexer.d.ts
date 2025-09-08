@@ -14,9 +14,7 @@ interface RuleConfig {
     priority?: number;
 }
 type Rule = string | RegExp | string[] | RuleConfig;
-interface Rules {
-    [key: string]: Rule;
-}
+type Rules = Record<string, Rule>;
 interface TokenizeOptions {
     continueOnError?: boolean;
 }

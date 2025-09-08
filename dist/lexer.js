@@ -93,6 +93,11 @@ var Lexer = class {
   compileRules(rules) {
     const compiledRules = [];
     for (const [name, rule] of Object.entries(rules)) {
+      if (typeof rule === "string") {
+        rules[name] = [rule];
+      }
+    }
+    for (const [name, rule] of Object.entries(rules)) {
       if (typeof rule === "symbol" && rule === error) {
         continue;
       }
@@ -128,14 +133,7 @@ var Lexer = class {
   compileRule(name, rule) {
     var _a;
     if (typeof rule === "string") {
-      return [{
-        pattern: this.escapeRegex(rule),
-        name,
-        transform: null,
-        lineBreaks: false,
-        priority: this.calculateBasePriority("string") + rule.length * 10,
-        originalLength: rule.length
-      }];
+      throw new Error("String rules should be converted to string arrays before compilation.");
     }
     if (rule instanceof RegExp) {
       return [{
@@ -167,7 +165,7 @@ var Lexer = class {
     const operators = sortedStrings.filter((s) => !isKeywordLike(s));
     const results = [];
     if (keywords.length > 0) {
-      const pattern = keywords.length === 1 ? `\\b${this.escapeRegex(keywords[0])}\\b` : `\\b(?:${keywords.map((k) => this.escapeRegex(k)).join("|")})\\b`;
+      const pattern = `\\b(?:${keywords.map((k) => this.escapeRegex(k)).join("|")})\\b`;
       results.push({
         pattern,
         name,
@@ -178,7 +176,7 @@ var Lexer = class {
       });
     }
     if (operators.length > 0) {
-      const pattern = operators.length === 1 ? this.escapeRegex(operators[0]) : `(?:${operators.map((o) => this.escapeRegex(o)).join("|")})`;
+      const pattern = `(?:${operators.map((o) => this.escapeRegex(o)).join("|")})`;
       results.push({
         pattern,
         name,
