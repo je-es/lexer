@@ -169,7 +169,6 @@
                 }
 
                 // Sort rules by priority to ensure correct matching
-                // This fixes the bracket issue by ensuring longer patterns match first
                 compiledRules.sort((a, b) => {
                     // Higher priority first
                     if (a.priority !== b.priority) {
@@ -254,9 +253,6 @@
 
                 // Handle keywords with word boundaries
                 if (keywords.length > 0) {
-                    // const pattern = keywords.length === 1
-                    //     ? `\\b${this.escapeRegex(keywords[0])}\\b`
-                    //     : `\\b(?:${keywords.map(k => this.escapeRegex(k)).join('|')})\\b`;
                     const pattern = `\\b(?:${keywords.map(k => this.escapeRegex(k)).join('|')})\\b`;
 
                     results.push({
@@ -286,13 +282,12 @@
                 return results;
             }
 
-            private calculateBasePriority(type: 'string' | 'regex' | 'keyword' | 'operator'): number {
+            private calculateBasePriority(type: 'regex' | 'keyword' | 'operator'): number {
                 // Higher numbers = higher priority
                 switch (type) {
                     case 'keyword'  : return 1000;  // Keywords should match before identifiers
                     case 'operator' : return 800;   // Multi-char operators before single chars
                     case 'regex'    : return 600;   // Complex patterns
-                    case 'string'   : return 400;   // Simple strings
                     default         : return 0;
                 }
             }

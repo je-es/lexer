@@ -11,7 +11,9 @@
 </div>
 
 <p align="center" style="font-style:italic; color:gray;">
-    A tool for converting text into tokens..!<br>
+    <br>
+    A tool for converting text into tokens..!
+    <br>
 </p>
 
 <div align="center">
@@ -25,7 +27,7 @@
 
 <!----------------------------------- HMM ----------------------------------->
 
-## .. 🚀
+## [1] [`@je-es/lexer`](https://github.com/je-es/lexer) 🚀
 
 > _For complete context, please refer to [these documents](https://github.com/kemet-lang/.github/blob/main/profile/README.md) first._
 
@@ -51,7 +53,7 @@ const tokens = tokenize(text, rules);
                              │
                              ▼
 ┌─────────────────────────────────────────────────────────┐
-│                       PROCESSING                        │
+│                        TOKENIZING                       │
 └─────────────────────────────────────────────────────────┘
                              │
                              ▼
@@ -64,7 +66,12 @@ const tokens = tokenize(text, rules);
 └─────────────────────────────────────────────────────────┘
 ```
 
-<br>
+---
+
+
+> #### 2. [`@je-es/parser`](https://github.com/je-es/parser)
+
+
 <div align="center">
     <img src="./assets/img/line.png" alt="line" style="display: block; margin-top:20px;margin-bottom:20px;width:500px;"/>
 </div>
@@ -79,7 +86,6 @@ const tokens = tokenize(text, rules);
     </b>
 </p>
 
-<br>
 <div align="center">
     <img src="./assets/img/line.png" alt="line" style="display: block; margin-top:20px;margin-bottom:20px;width:500px;"/>
 </div>

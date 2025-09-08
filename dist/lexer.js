@@ -199,9 +199,6 @@ var Lexer = class {
       case "regex":
         return 600;
       // Complex patterns
-      case "string":
-        return 400;
-      // Simple strings
       default:
         return 0;
     }

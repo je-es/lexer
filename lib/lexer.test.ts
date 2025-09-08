@@ -59,7 +59,7 @@
             });
         });
 
-        describe("Array rule handling (FIXED)", () => {
+        describe("Array rule handling", () => {
             it("should correctly tokenize brackets and operators", () => {
                 const rules = {
                     ws: /\s+/,
