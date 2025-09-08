@@ -1,8 +1,8 @@
 {
 	"name": "@je-es/lexer",
-	"version": "0.1.0",
-	"description": "Fundamental lexical analyzer that transforms source text into structured tokens with kind and position information.",
-	"keywords": [ "je-es", "lexer", "token", "tool" ],
+	"version": "0.1.1",
+	"description": "A tool for converting text into tokens.",
+	"keywords": [ "je-es", "lexer", "tool", "convert", "text", "tokens" ],
 	"license": "MIT",
 
 	"main": "./dist/lexer.js",

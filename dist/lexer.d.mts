@@ -1,4 +1,3 @@
-/** Represents a token with kind, value and position information */
 interface Token {
     kind: string;
     value: string | null;
@@ -8,27 +7,28 @@ interface Span {
     start: number;
     end: number;
 }
-/** Configuration for a lexer rule defining how to match and process tokens */
 interface RuleConfig {
     match: RegExp;
     value?: (text: string) => string;
     lineBreaks?: boolean;
+    priority?: number;
 }
-/** Defines a rule that can be a string, RegExp, string array, or RuleConfig */
 type Rule = string | RegExp | string[] | RuleConfig;
-/** Collection of named rules for tokenization */
 interface Rules {
     [key: string]: Rule;
 }
+interface TokenizeOptions {
+    continueOnError?: boolean;
+}
+interface CompiledRule {
+    pattern: string;
+    name: string;
+    transform: ((text: string) => string) | null;
+    lineBreaks: boolean;
+    priority: number;
+    originalLength: number;
+}
 declare const error: unique symbol;
-/**
- * Lexical analyzer that converts source text into tokens
- *
- * The lexer processes input text according to defined rules and produces
- * a stream of tokens with type and position information.
- *
- * FIXED: Proper word boundary handling for keywords
-*/
 declare class Lexer {
     private fastRegex;
     private ruleTypes;
@@ -38,20 +38,24 @@ declare class Lexer {
     private position;
     private length;
     constructor(rules: Rules);
-    private compileRules;
-    private escapeRegex;
     setup(input: string): void;
     next(): Token | undefined;
+    private compileRules;
+    private compileRule;
+    private compileStringArray;
+    private calculateBasePriority;
+    private escapeRegex;
     [Symbol.iterator](): Iterator<Token>;
 }
 /**
- * Tokenizes source code using the provided rules
- *
- * @param source    - The source text to tokenize
- * @param rules     - Rules defining how to break the source into tokens
- *
- * @returns Array of tokens extracted from the source
+* Tokenizes source code using the provided rules
+*
+* @param source     - The source text to tokenize
+* @param rules      - Rules defining how to break the source into tokens
+* @param options    - Optional tokenization behavior settings
+*
+* @returns Array of tokens extracted from the source
 */
-declare function tokenize(source: string, rules: Rules): Token[];
+declare function tokenize(source: string, rules: Rules, options?: TokenizeOptions): Token[];
 
-export { Lexer, type Rule, type RuleConfig, type Rules, type Span, type Token, error, tokenize };
+export { type CompiledRule, Lexer, type Rule, type RuleConfig, type Rules, type Span, type Token, type TokenizeOptions, error, tokenize };
