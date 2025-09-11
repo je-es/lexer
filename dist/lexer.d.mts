@@ -11,20 +11,10 @@ interface RuleConfig {
     match: RegExp;
     value?: (text: string) => string;
     lineBreaks?: boolean;
-    priority?: number;
 }
 type Rule = string | RegExp | string[] | RuleConfig;
-type Rules = Record<string, Rule>;
-interface TokenizeOptions {
-    continueOnError?: boolean;
-}
-interface CompiledRule {
-    pattern: string;
-    name: string;
-    transform: ((text: string) => string) | null;
-    lineBreaks: boolean;
-    priority: number;
-    originalLength: number;
+interface Rules {
+    [key: string]: Rule;
 }
 declare const error: unique symbol;
 declare class Lexer {
@@ -36,13 +26,10 @@ declare class Lexer {
     private position;
     private length;
     constructor(rules: Rules);
+    private compileRules;
+    private escapeRegex;
     setup(input: string): void;
     next(): Token | undefined;
-    private compileRules;
-    private compileRule;
-    private compileStringArray;
-    private calculateBasePriority;
-    private escapeRegex;
     [Symbol.iterator](): Iterator<Token>;
 }
 /**
@@ -54,6 +41,6 @@ declare class Lexer {
 *
 * @returns Array of tokens extracted from the source
 */
-declare function tokenize(source: string, rules: Rules, options?: TokenizeOptions): Token[];
+declare function tokenize(source: string, rules: Rules): Token[];
 
-export { type CompiledRule, Lexer, type Rule, type RuleConfig, type Rules, type Span, type Token, type TokenizeOptions, error, tokenize };
+export { Lexer, type Rule, type RuleConfig, type Rules, type Span, type Token, error, tokenize };
