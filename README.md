@@ -29,47 +29,67 @@
 
 ## [1] [`@je-es/lexer`](https://github.com/je-es/lexer) 🚀
 
-> _For complete context, please refer to [these documents](https://github.com/kemet-lang/.github/blob/main/profile/README.md) first._
+> _To understand the full context, please refer to [these documents](https://github.com/kemet-lang/.github/blob/main/profile/README.md)._
 
-```bash
-# install using npm
-npm install @je-es/lexer
-```
+- ### Install
 
-```ts
-// import using typescript
-import { tokenize } from "@je-es/lexer";
+    ```bash
+    npm install @je-es/lexer
+    ```
 
-// usage
-const tokens = tokenize(text, rules);
-```
+    ```ts
+    import * as Lexer from "@je-es/lexer";
+    ```
 
-> Example:
+- ### Usage
 
-```bash
-┌─────────────────────────────────────────────────────────┐
-│                      "let x = 42;"                      │
-└─────────────────────────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────┐
-│                        TOKENIZING                       │
-└─────────────────────────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────┐
-│     ┌───────┬───────┬─────────┬─────────┬─────────┐     │
-│     │ let   │ x     │  =      │ 42      │ ;       │     │
-│     │ kw    │ ident │  op     │ number  │ punct   │     │
-│     │ 0-3   │ 4-5   │  6-7    │ 8-10    │ 11-12   │     │
-│     └───────┴───────┴─────────┴─────────┴─────────┘     │
-└─────────────────────────────────────────────────────────┘
-```
+    ```ts
+    // [1] create lexer rules
+    const lexer_rules : Lexer.Rules = {
+        // ═══ Whitespace ═══
+        ws              : /\s+/,
+
+        // ═══ Literals ═══
+        bin             : /0b[01]+/,
+        oct             : /0o[0-7]+/,
+        ...
+
+        // ═══ Keywords ═══
+        try             : 'try',
+        catch           : 'catch',
+        ...
+
+        // ═══ Types ═══
+        f_type          : ['f16', 'f32', 'f64', 'f80', 'f128'],
+        ...
+
+        // ═══ Operators ═══
+        '=='            : '==',
+        '!='            : '!=',
+        ...
+
+        // ═══ Identifier ═══
+        ident           : /[a-zA-Z_][a-zA-Z0-9_]*/,
+    };
+    ```
+
+    ```ts
+    // [2] tokenize input using your rules
+    const tokens = Lexer.tokenize('<input>', rules);
+    ```
 
 ---
 
 
-> #### 2. [`@je-es/parser`](https://github.com/je-es/parser)
+> #### 1. [`@je-es/lexer`](https://github.com/je-es/lexer)
+
+> #### 2. [@je-es/parser](https://github.com/je-es/parser)
+
+> #### 3. [@je-es/syntax](https://github.com/je-es/syntax)
+
+> #### 4. [@je-es/ast](https://github.com/je-es/ast)
+
+> #### 5. [@je-es/ast-analyzer](https://github.com/je-es/ast-analyzer)
 
 
 <div align="center">
