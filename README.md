@@ -29,7 +29,7 @@
 
 ## [1] [`@je-es/lexer`](https://github.com/je-es/lexer) 🚀
 
-> _To understand the full context, please refer to [these documents](https://github.com/kemet-lang/.github/blob/main/profile/README.md)._
+> _To understand the full context, please refer to [this document](https://github.com/kemet-lang/)._
 
 - ### Install
 
