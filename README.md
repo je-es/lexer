@@ -2,7 +2,7 @@
 <br>
 <div align="center">
     <p>
-        <img src="./assets/img/logo.png" alt="lexer" height="80" />
+        <img src="./assets/img/logo.png" alt="lsp" height="50" />
     </p>
 </div>
 
@@ -29,7 +29,7 @@
 
 ## [1] [`@je-es/lexer`](https://github.com/je-es/lexer) 🚀
 
-> _To understand the full context, please refer to [this document](https://github.com/kemet-lang/)._
+> _To understand the full context, please refer to [these documents](https://github.com/kemet-lang/.github/blob/main/profile/roadmap/MVP.md)._
 
 - ### Install
 
@@ -89,7 +89,13 @@
 
 > #### 4. [@je-es/ast](https://github.com/je-es/ast)
 
-> #### 5. [@je-es/ast-analyzer](https://github.com/je-es/ast-analyzer)
+> #### 5. [@kemet-lang/rules](https://github.com/kemet-lang/rules)
+
+> #### 6. [@je-es/ast-analyzer](https://github.com/je-es/ast-analyzer)
+
+> #### 7. [@je-es/project](https://github.com/je-es/project)
+
+> #### 8. [@je-es/lsp](https://github.com/je-es/lsp)
 
 
 <div align="center">
