@@ -96,11 +96,11 @@
 
         > #### 5. [@je-es/ast-analyzer](https://github.com/je-es/ast-analyzer)
 
-        > #### 6. [@je-es/project](https://github.com/je-es/project)
+        > #### 6. [@je-es/codegen](https://github.com/je-es/codegen)
 
-        > #### 7. [@je-es/lsp](https://github.com/je-es/lsp)
+        > #### 7. [@je-es/project](https://github.com/je-es/project)
 
-        > #### 8. [@je-es/codegen](https://github.com/je-es/codegen)
+        > #### 8. [@je-es/lsp](https://github.com/je-es/lsp)
 
         > #### 9. [@je-es/compiler](https://github.com/je-es/compiler)
 
