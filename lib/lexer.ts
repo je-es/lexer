@@ -1,4 +1,4 @@
-// lexer.ts — A tool for converting text into tokens..!
+// lexer.ts — Fast lexer for converting text and source code into a stream of tokens for parsing.
 //
 // repo   : https://github.com/je-es/lexer
 // author : https://github.com/maysara-elshewehy
