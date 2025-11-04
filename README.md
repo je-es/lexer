@@ -90,9 +90,9 @@
 
         > #### 2. [@je-es/parser](https://github.com/je-es/parser)
 
-        > #### 3. [@je-es/syntax](https://github.com/je-es/syntax)
+        > #### 3. [@je-es/ast](https://github.com/je-es/ast)
 
-        > #### 4. [@je-es/ast](https://github.com/je-es/ast)
+        > #### 4. [@je-es/syntax](https://github.com/je-es/syntax)
 
         > #### 5. [@je-es/ast-analyzer](https://github.com/je-es/ast-analyzer)
 
